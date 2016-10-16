@@ -11,6 +11,16 @@ module.exports = db.define('order', {
     instanceMethods: {
     },
     classMethods: {
+      getCart: function(user){
+        var that = this;
+        return this.findOne({ where: { status: 'CART', userId: user.id } })
+          .then(function(cart){
+            if(cart){
+              return cart;
+            }
+            return that.create({ status: 'CART', userId: user.id });
+          });
+      }
     },
     hooks: {
     }

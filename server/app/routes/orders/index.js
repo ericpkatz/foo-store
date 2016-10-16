@@ -16,13 +16,7 @@ var ensureAuthenticated = function (req, res, next) {
 };
 
 router.post('/', ensureAuthenticated, function (req, res) {
-  Order.findOne({ where: { status: 'CART', userId: req.user.id } })
-    .then(function(cart){
-      if(cart){
-        return cart;
-      }
-      return Order.create({ status: 'CART', userId: req.user.id });
-    })
+  Order.getCart(req.user)
     .then(function(cart){
       res.send(cart);
     });
